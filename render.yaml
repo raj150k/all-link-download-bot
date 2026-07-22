@@ -1,0 +1,34 @@
+services:
+  # ── Option A: Background Worker (polling — simpler) ─────────────────
+  - type: worker
+    name: all-link-download-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false   # Set manually in Render dashboard
+      - key: OWNER_USERNAME
+        value: raj169k
+      - key: MODE
+        value: polling
+      - key: DOWNLOAD_DIR
+        value: downloads
+      - key: CONVERTED_DIR
+        value: converted
+
+  # ── Option B: Web Service (webhook — requires paid plan for 24/7) ──
+  # - type: web
+  #   name: all-link-download-bot-webhook
+  #   env: python
+  #   buildCommand: pip install -r requirements.txt
+  #   startCommand: gunicorn main:app -k uvicorn.workers.UvicornWorker
+  #   envVars:
+  #     - key: BOT_TOKEN
+  #       sync: false
+  #     - key: OWNER_USERNAME
+  #       value: raj169k
+  #     - key: MODE
+  #       value: webhook
+  #     - key: PORT
+  #       value: 8080
